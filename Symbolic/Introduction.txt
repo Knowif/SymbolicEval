@@ -1,0 +1,69 @@
+﻿This is a project created for simple symbolic evaluations. 
+
+How (will) it work:
+ * The text input will be scanned and parsed to a Tree Structure
+   with nodes and child-nodes.
+ * The tree will do a Breadth-First Search from the top to the 
+   bottom and call the first CanSimplify node to Simplify, and
+   repeat this operation till there's no CanSimplify nodes.
+   This is called "Expand".
+ * The tree then check if there are any nodes can combine, and 
+   merge them into a parent node.
+   This is called "Collect".
+ * Call a visualizer to display the result.
+
+29/12/2017
+
+My simplify code works!!!
+Add "Tree" class and BFS-simplify algorithm tomorrow.
+
+30/12/2017
+
+Added BFS-Simplify.
+Fixed a bug in the ctor. in Number class.
+Now the tree can simplify 
+	2 * (5 + 3/4) + -4
+to 15/2. But, for example, the tree only can simplify this 
+expression partly:
+	(x + 2) * (x + 3)
+but not totally. It products a result like
+	x * x + 2 * x + x * 2 + 9.
+Note that the term "2x" appeared twice, but the tree cannot collect
+them for now.
+
+And, 
+HAPPY NEW YEAR!
+
+Best wishes.
+
+31/12/2017
+
+Added "Divide" binary node, but I don't know how to fully simplify
+an expression with fractional unknowns exactly. Currently I just do a 
+basic reduction. Expressions like
+	(5 + 3) / 4
+become
+	(1/4) * (5 + 3), 
+and
+	4 * x * y * z
+	-------------
+	    x * z
+become
+	4 * y.
+But in many cases DivideNode doesn't know if it can be reduced, this
+is because MultiNodes always want to expand themselve instead of
+merging terms. For example
+	3 * x - 7 * y * x
+	-----------------
+	      x * y
+can not be simplified anymore. Maybe I can reduce Divisions after 
+Collection.
+
+13/1/2018
+
+I decided to write the scanner & parser today.
+
+The problem is, how to make good interaction between UnknownNode
+(or VaribleNode?) and the SymbolTable (which will come soon).
+
+28/1/2018

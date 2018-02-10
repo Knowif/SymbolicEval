@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbolic", "Symbolic\Symbolic.csproj", "{10E655E7-343F-456A-8584-848AC8B40A53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymbolicUI", "SymbolicUI\SymbolicUI.csproj", "{F0012A38-A7B2-4CCE-BA85-56D732CCE014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymbolicAndroidUI", "SymbolicAndroidUI\SymbolicAndroidUI.csproj", "{9BA2D161-C283-46BD-B20A-1264A5D8150F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10E655E7-343F-456A-8584-848AC8B40A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E655E7-343F-456A-8584-848AC8B40A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E655E7-343F-456A-8584-848AC8B40A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E655E7-343F-456A-8584-848AC8B40A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0012A38-A7B2-4CCE-BA85-56D732CCE014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0012A38-A7B2-4CCE-BA85-56D732CCE014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0012A38-A7B2-4CCE-BA85-56D732CCE014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0012A38-A7B2-4CCE-BA85-56D732CCE014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA2D161-C283-46BD-B20A-1264A5D8150F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA2D161-C283-46BD-B20A-1264A5D8150F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA2D161-C283-46BD-B20A-1264A5D8150F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9BA2D161-C283-46BD-B20A-1264A5D8150F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA2D161-C283-46BD-B20A-1264A5D8150F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA2D161-C283-46BD-B20A-1264A5D8150F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D943D15F-6B19-401C-A06F-58CD207E8452}
+	EndGlobalSection
+EndGlobal
