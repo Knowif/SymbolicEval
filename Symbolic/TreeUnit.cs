@@ -9,17 +9,15 @@ namespace Symbolic
 
 		public NumberNode(Number x) { Value = x; }
 
-		public override bool CanSimplify() { return false; }
+		public override SimplifyResult Simplify() { return new SimplifyResult(false); }
 
-		public override void Simplify() { }
-
-		public override bool CanReplace() { return false; }
-
-		public override Node Replace() { return null; }
+		public override SimplifyResult Replace(out Node node)
+		{
+			node = null;
+			return new SimplifyResult(false);
+		}
 
 		public override double NumericEval() { return Value.Numeric(); }
-
-		public override bool DirectEqualsTo(Node n) { return ((NumberNode)n).Value == Value; }
 
 		public override string Print() { return Value.ToString(); }
 
@@ -32,17 +30,15 @@ namespace Symbolic
 
 		public UnknownNode(String n) { Name = n; }
 
-		public override bool CanSimplify() { return false; }
+		public override SimplifyResult Simplify() { return new SimplifyResult(false); }
 
-		public override void Simplify() { }
-
-		public override bool CanReplace() { return false; }
-
-		public override Node Replace() { return null; }
+		public override SimplifyResult Replace(out Node node)
+		{
+			node = null;
+			return new SimplifyResult(false);
+		}
 
 		public override double NumericEval() { throw new InvalidOperationException(); }
-
-		public override bool DirectEqualsTo(Node n) { return ((UnknownNode)n).Name == Name; }
 
 		public override string Print() { return Name; }
 

@@ -17,12 +17,16 @@ namespace SymbolicUI
 			Parser parser = new Parser(scan);
 			try
 			{
+				textBox2.Clear();
 				Tree t = parser.Parse();
-				t.Simplify();
-				textBox2.Text = t.Print();
+				var steps = t.Simplify();
+				foreach (var step in steps)
+				{
+					textBox2.Text += "=" + step + "\n";
+				}
 			} catch (Exception)
 			{
-				textBox2.Text = "ERROR";
+				textBox2.Text = "=ERROR";
 			}
 		}
 	}

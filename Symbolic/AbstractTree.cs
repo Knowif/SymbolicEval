@@ -3,22 +3,27 @@ using System.Collections.Generic;
 
 namespace Symbolic
 {
+	public struct SimplifyResult
+	{
+		public readonly bool success;
+		public readonly bool important;
+
+		public SimplifyResult(bool success, bool important = false)
+		{
+			this.success = success;
+			this.important = important;
+		}
+	}
+
 	public abstract class Node
 	{
-		public abstract bool CanSimplify();
+		public abstract SimplifyResult Simplify();
 
-		public abstract void Simplify();
-
-		public abstract bool CanReplace();
-
-		public abstract Node Replace();
+		public abstract SimplifyResult Replace(out Node result);
 
 		public abstract double NumericEval();
 
 		public abstract string Print();
-
-		// Assume the type of n is always same with the object
-		public abstract bool DirectEqualsTo(Node n);
 
 		public abstract IEnumerable<Node> GetChildren();
 	}
@@ -26,49 +31,56 @@ namespace Symbolic
 	public class Tree
 	{
 		public Node Root;
+		public int StepLimit = 1000;
 
 		public Tree(Node top) { Root = top; }
 
-		public void Simplify()
+		public List<String> Simplify()
 		{
-			Node n;
-			Console.WriteLine("\n" + Root.Print());
+			List<String> steps = new List<string>();
+			Queue<Node> queue = new Queue<Node>();
+			Console.WriteLine(Root.Print());
+
 			while (true)
 			{
-				if (Root.CanReplace())
+				var res = Root.Replace(out Node newRoot);
+				if (res.success)
+					Root = newRoot;
+				if (res.important)
+					steps.Add(Root.Print());
+
+				if (!BFSSimplify(Root, queue, steps)) break;
+				
+				if (steps.Count >= StepLimit)
 				{
-					Root = Root.Replace();
-					Console.WriteLine(Root.Print() + " -REP");
-					continue;
-				}
-
-				n = BFS(Root);
-				if (n != null)
-					n.Simplify();
-				else
+					steps.Add("ERROR_STEP_LIMIT_REACHED");
 					break;
-
-				Console.WriteLine(Root.Print() + " -SIMP");
+				}
 			}
+
+			steps.Add(Root.Print());
+			return steps;
 		}
 
 		public string Print() { return Root.Print(); }
 
-		private Node BFS(Node n)
+		private bool BFSSimplify(Node n, Queue<Node> q, List<String> steps)
 		{
-			Queue<Node> q = new Queue<Node>();
+			q.Clear();
 			q.Enqueue(n);
 
 			while (q.Count > 0)
 			{
 				Node x = q.Dequeue();
-				if (x.CanSimplify()) return x;
+				var res = x.Simplify();
+				if (res.success) return true;
+				if (res.important) steps.Add(Root.Print());
 
 				foreach (Node child in x.GetChildren())
 					q.Enqueue(child);
 			}
 
-			return null;
+			return false;
 		}
 	}
 
@@ -84,40 +96,11 @@ namespace Symbolic
 		public Node LChild, RChild;
 
 		public override IEnumerable<Node> GetChildren() { return new Node[] { LChild, RChild }; }
-
-		public override bool DirectEqualsTo(Node n)
-		{
-			BinaryNode m = (BinaryNode)n;
-			return m.LChild.DirectEqualsTo(LChild) && m.RChild.DirectEqualsTo(RChild);
-		}
 	}
 
 	public abstract class MultiChildNode : Node
 	{
 		public List<Node> Children;
-
-		public override bool DirectEqualsTo(Node n)
-		{
-			MultiChildNode m = (MultiChildNode)n;
-			foreach (Node x in Children)
-			{
-				int countA = Children.FindAll((d) => d.DirectEqualsTo(x)).Count;
-				int countB = m.Children.FindAll((d) => d.DirectEqualsTo(x)).Count;
-				if (countA != countB) return false;
-			}
-
-			return true;
-		}
-
-		public bool ContainsNode(Node n)
-		{
-			foreach (Node c in Children)
-				if (c.GetType().IsInstanceOfType(n))
-					if (c.DirectEqualsTo(n))
-						return true;
-
-			return false;
-		}
 
 		public override IEnumerable<Node> GetChildren() { return Children.ToArray(); }
 	}
